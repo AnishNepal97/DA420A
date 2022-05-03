@@ -22,12 +22,11 @@ library(lpSolve)  # linear programming package
 library(kableExtra)
 library(dplyr)
 ```
-
 ## Problem 1: Short Answers
 
-Suppose you are the bank manager and your service goal is to realize wait times of 60 seconds of less, with wait times in excess of 120 seconds being considered intolerable. Based on Figure 6.1 through 6.6 (Call Center Operations for Monday, Tuesday, Wednesday, Thursday, Friday, and Sunday) in page 69 –71: 
-  
-  For each day, give an approximated percentage of the ribbons fall above the 120 seconds line. What kind of actions would you take? Please be as specific as possible.
+Suppose you are the bank manager and your service goal is to realize wait times of 60 seconds of less, with wait times in excess of 120 seconds
+being considered intolerable. Based on Figure 6.1 through 6.6 (Call Center Operations for Monday, Tuesday, Wednesday, Thursday, Friday, and Sunday) in page 69 –71: 
+For each day, give an approximated percentage of the ribbons fall above the 120 seconds line. What kind of actions would you take? Please be as specific as possible.
 
 ```{r echo=FALSE}
 df <- data.frame(Day=character(), 
@@ -140,13 +139,19 @@ for(index.day in seq(along=day.of.week.list)) {
 kable(df, col.names = c("Day of Week", "Percentage")) %>%
   kable_styling(bootstrap_options = "striped")
 ```
-Sunday, Monday and Tuesday are the top 3 days where calls are recieved. Sunday, Monday and Wednesday are the top 3 days where percentage of the ribbons fall above the 120 seconds line.  My recomendation is to apply labor planning (LP) problems to address staffing needs over a specific time period (i.e. shift).  This models is useful when managers has flexibility in assigning workers to jobs that require overlapping or interchangeable talents. The bank manager would set a schedule that would minimize its total personnel costs while meeting service goals of wait times of 60 seconds or less and wait times not to excess 120 seconds.  The objective is to minimize cost. There is a constraint for each shift of the day, stating that the number of people working at the bank during that shift should be at least the minimum number shown in the tables bellow.
+Sunday, Monday and Tuesday are the top 3 days where calls are recieved. Sunday, Monday and Wednesday are the top 3 days where percentage of 
+the ribbons fall above the 120 seconds line.  My recomendation is to apply labor planning (LP) problems to address staffing needs over a specific time 
+period (i.e. shift).  This models is useful when managers has flexibility in assigning workers to jobs that require overlapping or interchangeable talents. 
+The bank manager would set a schedule that would minimize its total personnel costs while meeting service goals of wait times of 60 seconds or less and wait 
+times not to excess 120 seconds.  The objective is to minimize cost. There is a constraint for each shift of the day, stating that the number of people working 
+at the bank during that shift should be at least the minimum number shown in the tables bellow.
 
 From the chart above, on Sunday approximate 11.4% of calls fall above the 120 seconds line between 7AM and 12PM (Shift 2/3) and  between 4PM and 5PM (Shift 4).
 
 From the chart above, on Monday approximate 10.5% of calls fall above the 120 seconds line between 2PM and 9PM (Shift 2-7).
 
-From the chart above, on Tuesday approximate 9.0% of calls fall above the 120 seconds line between 9:30AM - 10:30AM (Shift 2/3), between 2PM - 5PM (Shift 2-5), and between 7:30PM - 8:30PM (Shift 6-7).
+From the chart above, on Tuesday approximate 9.0% of calls fall above the 120 seconds line between 9:30AM - 10:30AM (Shift 2/3), between 2PM - 5PM (Shift 2-5), 
+and between 7:30PM - 8:30PM (Shift 6-7).
 
 The recomendation is develop an optimized model on the days with highest call volume since the budget is limited.
 
@@ -157,17 +162,21 @@ In page 75 of the textbook (Chapter 6), the author mentioned “optimal solution
 
 What is the optimal solution? 
   
-  In linear program an optimal solution (i.e. feasible solution) with the largest objective function value (for a maximization problem) or lowest objective function value (for a minimization problem).  It is possible for some problems to have more than one optimal solution.
+In linear program an optimal solution (i.e. feasible solution) with the largest objective function value (for a maximization problem) or 
+lowest objective function value (for a minimization problem).  It is possible for some problems to have more than one optimal solution.
 
 The workforce scheduling is a minimization problem where workers must be scheduled such that resource needs are meet while minimizing costs.
 
 How to find the optimal solutions? 
   
-  To find  optimal solutions, both queing theory and interger programing will be utilized  The goal is to minimize total call operator costs while not exceeding constraints, hourly/shift needs.  Interger programing is a good method to solvelLabor scheduling because it is a problem that must be solved on a regular basis. Once the objective function and constraints are established, the inputs can be changed each week/month to provide an updated schedule.
+To find  optimal solutions, both queing theory and interger programing will be utilized  The goal is to minimize total call operator costs while
+not exceeding constraints, hourly/shift needs.  Interger programing is a good method to solvelLabor scheduling because it is a problem that must be 
+solved on a regular basis. Once the objective function and constraints are established, the inputs can be changed each week/month to provide an updated schedule.
 
 Objective Function:
   
-  Minimize total daily personnel cost = 252 * $Shift_1$ + 288 * $Shift_2$ + 180 * $Shift_3$ + 180 * $Shift_4$ + 180 * $Shift_5$ + 288 * $Shift_6$ + 288 * $Shift_7$ + 288 * $Shift_8$
+ Minimize total daily personnel cost = 252 * $Shift_1$ + 288 * $Shift_2$ + 180 * $Shift_3$ + 180 * $Shift_4$ + 180 * $Shift_5$ + 288 * \
+                                       $Shift_6$ + 288 * $Shift_7$ + 288 * $Shift_8$
   
   Constraints:
   
